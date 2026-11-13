@@ -1,0 +1,5 @@
+# HomeMe local stack. Services are added in Feature 1, Step 5
+# (postgres, db-migrations, resale-loader, vector-init, qdrant).
+name: homeme
+
+services: {}

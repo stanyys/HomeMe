@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Tool caches
+.pytest_cache/
+.ruff_cache/
+.pyright/
+.coverage
+htmlcov/
+
+# Secrets: never commit. Copy .env.example to .env instead.
+.env
+.env.*
+!.env.example
+secrets/
+
+# Data: never commit. See data/README.md for how to get it.
+data/*
+!data/README.md
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

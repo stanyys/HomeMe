@@ -1,0 +1,65 @@
+# Workspace root. It is not a package itself: it ties the members together,
+# holds the shared dev tools, and configures ruff / pyright / pytest once for everyone.
+[project]
+name = "homeme"
+version = "0.1.0"
+description = "HomeMe: a multi-agent Q&A system for Singapore HDB housing."
+readme = "README.md"
+authors = [{ name = "Stanley Yin", email = "44232226+stanyys@users.noreply.github.com" }]
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/*", "services/*"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.7.0",
+    "pyright>=1.1.414",
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+# ---------------------------------------------------------------- ruff
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["packages/*/src", "services/*/src"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # pyflakes
+    "I",       # isort
+    "B",       # bugbear: likely bugs
+    "UP",      # pyupgrade: modern syntax
+    "SIM",     # simplifications
+    "N",       # naming
+    "S",       # bandit: security
+    "PT",      # pytest style
+    "RUF",     # ruff-specific
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101"]  # assert is how pytest works
+
+# ---------------------------------------------------------------- pyright
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.13"
+venvPath = "."
+venv = ".venv"
+include = ["packages", "services"]
+
+# ---------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+testpaths = ["packages", "services"]
+# importlib mode: lets several members each have tests/test_smoke.py without name clashes.
+addopts = ["--import-mode=importlib", "--strict-markers", "--strict-config", "-ra"]
+xfail_strict = true
+markers = [
+    "integration: needs Docker (testcontainers: real Postgres / Qdrant)",
+]

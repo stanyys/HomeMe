@@ -1,0 +1,10 @@
+[project]
+name = "homeme-vector-init"
+version = "0.1.0"
+description = "One-shot job: create the Qdrant collection for the policy corpus."
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
